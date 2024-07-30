@@ -28,9 +28,9 @@ class CsvBuilder
             $salaryDate = $this->determineSalaryDate($month);
 
             $remainingMonths[] = [
-                'Month' => $monthName,
-                'Bonusdate' => $bonusDate->format($this->format),
-                'Salarydate' => $salaryDate->format($this->format)
+                'month' => $monthName,
+                'bonus_date' => $bonusDate->format($this->format),
+                'salary_date' => $salaryDate->format($this->format)
             ];
         }
 
