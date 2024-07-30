@@ -11,9 +11,9 @@ class CsvBuilder
     {
         $this->dateTimeFormat = 'd-m-Y';
     }
-    public function buildCsv(): string
+    public function buildCsv($csvName): string
     {
-        return $this->arrayToCsv($this->buildPayrollArray(), 'payment_dates.csv');
+        return $this->arrayToCsv($this->buildPayrollArray(), $csvName);
     }
 
     private function buildPayrollArray(): array

@@ -22,10 +22,11 @@ class CsvController extends AbstractController
     #[Route('/')]
     public function downloadCSV(): Response
     {
-        $response = new BinaryFileResponse($this->csvBuilder->buildCsv());
+        $csvName = 'payment_dates.csv';
+        $response = new BinaryFileResponse($this->csvBuilder->buildCsv($csvName));
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'payment_dates.csv'
+            $csvName
         );
 
         return $response;
