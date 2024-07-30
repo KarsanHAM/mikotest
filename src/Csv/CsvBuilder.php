@@ -58,13 +58,10 @@ class CsvBuilder
         $bonusDate = date($this->format, mktime(0, 0, 0, $month, 15));
         $bonusDateTime = new DateTime($bonusDate);
 
-        switch ($bonusDateTime) {
-            case $this->isSaturday($bonusDateTime):
-                $this->addDays($bonusDateTime, 4);
-                break;
-            case $this->isSunday($bonusDateTime):
-                $this->addDays($bonusDateTime, 3);
-                break;
+        if ($this->isSaturday($bonusDateTime)) {
+            $this->addDays($bonusDateTime, 4);
+        } elseif ($this->isSunday($bonusDateTime)) {
+            $this->addDays($bonusDateTime, 3);
         }
 
         return $bonusDateTime;
@@ -75,13 +72,10 @@ class CsvBuilder
         $salaryDate = date($this->format, mktime(0, 0, 0, $month, date('t', mktime(0, 0, 0, $month, 1))));
         $salaryDateTime = new DateTime($salaryDate);
 
-        switch ($salaryDateTime) {
-            case $this->isSaturday($salaryDateTime):
-                $this->addDays($salaryDateTime, 2);
-                break;
-            case $this->isSunday($salaryDateTime):
-                $this->addDays($salaryDateTime, 1);
-                break;
+        if ($this->isSaturday($salaryDateTime)) {
+            $this->addDays($salaryDateTime, 2);
+        } elseif ($this->isSunday($salaryDateTime)) {
+            $this->addDays($salaryDateTime, 1);
         }
 
         return $salaryDateTime;
