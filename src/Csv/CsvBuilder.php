@@ -11,7 +11,8 @@ class CsvBuilder
         return $this->arrayToCsv($this->buildPayrollArray(), 'test11.csv');
     }
 
-    private function buildPayrollArray() {
+    private function buildPayrollArray(): array
+    {
         $format = 'd-m-Y';
         $currentDate = New DateTime;
         $currentMonth = (int) $currentDate->format('n');
@@ -48,7 +49,7 @@ class CsvBuilder
         return $filePath;
     }
 
-    private function determineBonusDate(string $month)
+    private function determineBonusDate(string $month): DateTime
     {
         $bonusDate = date('d-m-Y', mktime(0, 0, 0, $month, 15));
         $bonusDateTime = new DateTime($bonusDate);
@@ -65,7 +66,7 @@ class CsvBuilder
         return $bonusDateTime;
     }
 
-    private function determineSalaryDate(string $month)
+    private function determineSalaryDate(string $month): DateTime
     {
         $salaryDate = date('d-m-Y', mktime(0, 0, 0, $month, date('t', mktime(0, 0, 0, $month, 1))));
         $salaryDateTime = new DateTime($salaryDate);
@@ -82,7 +83,8 @@ class CsvBuilder
         return $salaryDateTime;
     }
 
-    private function addDays(DateTime $date, int $days ) {
+    private function addDays(DateTime $date, int $days ): DateTime
+    {
         $date->modify('+' . $days . ' days');
 
         return $date;

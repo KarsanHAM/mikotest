@@ -27,7 +27,7 @@ class CsvController extends AbstractController
         $response = new BinaryFileResponse($filePath);
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'remaining_months.csv'
+            'payment_dates.csv'
         );
 
         return $response;
