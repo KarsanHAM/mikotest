@@ -6,14 +6,18 @@ use DateTime;
 
 class CsvBuilder
 {
-    public function buildCsv()
+    private string $format;
+    public function __construct()
     {
-        return $this->arrayToCsv($this->buildPayrollArray(), 'test11.csv');
+        $this->format = 'd-m-Y';
+    }
+    public function buildCsv(): string
+    {
+        return $this->arrayToCsv($this->buildPayrollArray(), 'payment_dates.csv');
     }
 
     private function buildPayrollArray(): array
     {
-        $format = 'd-m-Y';
         $currentDate = New DateTime;
         $currentMonth = (int) $currentDate->format('n');
         $remainingMonths = [];
@@ -25,8 +29,8 @@ class CsvBuilder
 
             $remainingMonths[] = [
                 'Month' => $monthName,
-                'Bonusdate' => $bonusDate->format($format),
-                'Salarydate' => $salaryDate->format($format)
+                'Bonusdate' => $bonusDate->format($this->format),
+                'Salarydate' => $salaryDate->format($this->format)
             ];
         }
 
@@ -51,7 +55,7 @@ class CsvBuilder
 
     private function determineBonusDate(string $month): DateTime
     {
-        $bonusDate = date('d-m-Y', mktime(0, 0, 0, $month, 15));
+        $bonusDate = date($this->format, mktime(0, 0, 0, $month, 15));
         $bonusDateTime = new DateTime($bonusDate);
 
         switch ($bonusDateTime) {
@@ -68,7 +72,7 @@ class CsvBuilder
 
     private function determineSalaryDate(string $month): DateTime
     {
-        $salaryDate = date('d-m-Y', mktime(0, 0, 0, $month, date('t', mktime(0, 0, 0, $month, 1))));
+        $salaryDate = date($this->format, mktime(0, 0, 0, $month, date('t', mktime(0, 0, 0, $month, 1))));
         $salaryDateTime = new DateTime($salaryDate);
 
         switch ($salaryDateTime) {
@@ -83,11 +87,10 @@ class CsvBuilder
         return $salaryDateTime;
     }
 
-    private function addDays(DateTime $date, int $days ): DateTime
+    private function addDays(DateTime $date, int $days ): void
     {
         $date->modify('+' . $days . ' days');
 
-        return $date;
     }
 
     private function isSaturday(DateTime $dateTime): bool
