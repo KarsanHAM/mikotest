@@ -5,16 +5,24 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Csv\CsvBuilder;
 
-class SalaryController
+class CsvController
 {
-    #[Route('/')]
-    public function number(): Response
+    private CsvBuilder $csvBuilder;
+
+    public function __construct()
     {
-        $number = random_int(0, 100);
+        $this->csvBuilder = new CsvBuilder();
+    }
+
+    #[Route('/')]
+    public function downloadCsv(): Response
+    {
+        $data = $this->csvBuilder->buildCsv();
 
         return new Response(
-            '<html><body>Lucky number: '.$number.'</body></html>'
+            $data
         );
     }
 }
