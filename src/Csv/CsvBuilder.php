@@ -8,7 +8,7 @@ class CsvBuilder
 {
     public function buildCsv()
     {
-        $this->arrayToCsv($this->buildPayrollArray(), 'test11.csv');
+        return $this->arrayToCsv($this->buildPayrollArray(), 'test11.csv');
     }
 
     private function buildPayrollArray() {
