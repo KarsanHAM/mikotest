@@ -6,10 +6,10 @@ use DateTime;
 
 class CsvBuilder
 {
-    private string $format;
+    private string $dateTimeFormat;
     public function __construct()
     {
-        $this->format = 'd-m-Y';
+        $this->dateTimeFormat = 'd-m-Y';
     }
     public function buildCsv(): string
     {
@@ -29,8 +29,8 @@ class CsvBuilder
 
             $remainingMonths[] = [
                 'month' => $monthName,
-                'bonus_date' => $bonusDate->format($this->format),
-                'salary_date' => $salaryDate->format($this->format)
+                'bonus_date' => $bonusDate->format($this->dateTimeFormat),
+                'salary_date' => $salaryDate->format($this->dateTimeFormat)
             ];
         }
 
@@ -55,7 +55,7 @@ class CsvBuilder
 
     private function determineBonusDate(string $month): DateTime
     {
-        $bonusDate = date($this->format, mktime(0, 0, 0, $month, 15));
+        $bonusDate = date($this->dateTimeFormat, mktime(0, 0, 0, $month, 15));
         $bonusDateTime = new DateTime($bonusDate);
 
         if ($this->isSaturday($bonusDateTime)) {
@@ -69,7 +69,7 @@ class CsvBuilder
 
     private function determineSalaryDate(string $month): DateTime
     {
-        $salaryDate = date($this->format, mktime(0, 0, 0, $month, date('t', mktime(0, 0, 0, $month, 1))));
+        $salaryDate = date($this->dateTimeFormat, mktime(0, 0, 0, $month, date('t', mktime(0, 0, 0, $month, 1))));
         $salaryDateTime = new DateTime($salaryDate);
 
         if ($this->isSaturday($salaryDateTime)) {
